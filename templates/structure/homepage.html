@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+<title>Homepage</title>
+{% block body_block %}
+
+<!-- Video section -->
+<br>
+
+<div class="row row-cols-1 row-cols-md-4 ">
+
+<!--forloop here-->
+{% for video in videos %}
+
+    <div class="col mb-4">
+      <div class="card h-100">
+        <a href="{% url 'App_video:videodetails' slug=video.slug %}"><img src="/media/cover.jpg" class="card-img-top" alt="..."></a>
+        <div class="card-body">
+            <h5 class="card-title"><a href="#">{{video.title}}</a></h5>
+          <span>{{video.liked_video.count}} likes</span><p><span>{{video.video_comment.count }} comments</span></p>
+        </div>
+      </div>
+    </div>
+    <br>
+    {% endfor %}
+</div>
+
+
+{% endblock body_block %}

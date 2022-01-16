@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+<title>Videos</title>
+{% block body_block %}
+
+<br>
+<!-- Video section -->
+<div class="container">
+<h2>{{ video.title }}</h2>
+<!-- 4:3 aspect ratio -->
+  <div class="embed-responsive embed-responsive-4by3">
+    <iframe class="embed-responsive-item" src="{{ video.videoURL }}"></iframe>
+    </div>
+
+    <div class="container m-3">
+<!-- Like section -->
+    {% if not liked %}
+    <a href="{% url 'App_video:liked_video' pk=video.pk %}">
+      <i class="fa fa-thumbs-o-up fa-2x" aria-hidden="true">Like</i>
+    </a>
+    {% else %}
+    <a href="{% url 'App_video:unliked_video' pk=video.pk %}">
+      <i class="fa fa-thumbs-o-down fa-2x" aria-hidden="true">Unlike</i>
+    </a>
+    {% endif %}
+  </div>
+
+<!-- Comment Box -->
+    
+ <div class="container mt-3 mb-5 border border-info rounded p-3">
+  <form method="POST">
+    <div class="form-group form-row">
+      <div class="col-md-6 mb-3">
+        {{ comment_form|crispy }}
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary btn-sm">Comment</button>
+  </form>
+ </div>
+
+
+ <!-- Comment section -->
+
+ <div class="container" >
+  {% for comment in video.video_comment.all %}
+    <div class="row mt-3 mb-3 border border-dark rounded-pill p-3">
+      
+      <div class="col-md-2 ">
+        {% if user.user_profile %}
+        <img src="/media/{{user.user_profile.profile_pic}}" class="rounded-circle " alt="photo" width="80px">
+        {% else %}
+        <img src="/media/profile_pics/pp.png" class="rounded-circle " alt="photo" width="80px">
+        {% endif %}
+      </div>
+      <div class="col-md-10 ">
+      <p><a href="#">@{{comment.user}}</a> : {{comment.comment}}<br><h6>{{comment.comment_date}}</h6></p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  
+
+
+
+
+</div>
+     
+
+
+    
+        
+
+
+{% endblock body_block %}

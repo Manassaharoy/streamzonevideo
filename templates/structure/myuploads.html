@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title_block %} {{user}} {% endblock %}
+{% block body_block %}
+{% for video in user.video_uploader.all %}
+<h3>{{video.title}}</h3>
+<h6>{{video.upload_date}}</h6>
+<div class="row">
+  <div class="col-sm-12">
+    <a href="{% url 'App_video:videodetails' slug=video.slug %}"><button class="btn btn-primary">View</button></a>
+    <br>
+    <a class="btn btn-warning btn-sm mt-1" role="button" href="{% url 'error' %}">Edit</a>
+    <a class="btn btn-danger btn-sm mt-1" role="button" href="{% url 'error' %}">Delete</a>
+  </div>
+</div>
+
+<hr>
+{% endfor %}
+{% endblock %}
